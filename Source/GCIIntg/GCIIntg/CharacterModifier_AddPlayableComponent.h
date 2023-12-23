@@ -13,12 +13,12 @@ class UInputConfig;
 /**
  * Modifier class to add health component to Pawn
  */
-UCLASS(meta = (DisplayName = "CM Add Health Component"))
+UCLASS(meta = (DisplayName = "CM Add Playable Component"))
 class UCharacterModifier_AddPlayableComponent final : public UCharacterModifier
 {
 	GENERATED_BODY()
 public:
-	UCharacterModifier_AddPlayableComponent() {}
+	UCharacterModifier_AddPlayableComponent();
 
 protected:
 	UPROPERTY(EditDefaultsOnly, Category = "AddPlayableComponent")
@@ -28,6 +28,6 @@ protected:
 	TSoftObjectPtr<UInputConfig> InputConfig{ nullptr };
 
 protected:
-	virtual void OnApply(APawn* Pawn) const override;
+	virtual bool OnApply(APawn* Pawn) const override;
 
 };

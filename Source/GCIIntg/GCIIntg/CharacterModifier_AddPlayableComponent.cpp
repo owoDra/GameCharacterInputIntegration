@@ -12,20 +12,19 @@
 #include UE_INLINE_GENERATED_CPP_BY_NAME(CharacterModifier_AddPlayableComponent)
 
 
-void UCharacterModifier_AddPlayableComponent::OnApply(APawn* Pawn) const
+UCharacterModifier_AddPlayableComponent::UCharacterModifier_AddPlayableComponent()
 {
-	check(Pawn)
+	bOnlyApplyOnLocal = true;
+	bApplyOnClient = false;
+	bApplyOnServer = false;
+}
 
-	UE_LOG(LogGCII, Log, TEXT("[%s] On Instance Apply(%s)"),
-		Pawn->HasAuthority() ? TEXT("SERVER") : TEXT("CLIENT"), *GetNameSafe(this));
 
-	const auto* World{ Pawn->GetWorld() };
-	const auto bIsClient{ World->GetNetMode() != NM_DedicatedServer };
-	const auto bLocallyControlled{ Pawn->IsLocallyControlled() };
+bool UCharacterModifier_AddPlayableComponent::OnApply(APawn* Pawn) const
+{
+	const auto bCanApply{ Super::OnApply(Pawn) };
 
-	UE_LOG(LogGCII, Log, TEXT("Adding components for %s to world %s"), *GetPathNameSafe(Pawn), *World->GetDebugDisplayName());
-
-	if (bIsClient && bLocallyControlled)
+	if (bCanApply)
 	{
 		auto* LoadedComponentClass
 		{
@@ -51,4 +50,6 @@ void UCharacterModifier_AddPlayableComponent::OnApply(APawn* Pawn) const
 			NewPC->SetInputConfig(LoadedInputConfig);
 		}
 	}
+
+	return bCanApply;
 }
