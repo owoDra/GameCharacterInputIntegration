@@ -2,9 +2,9 @@
 
 #pragma once
 
-#include "CharacterModifier.h"
+#include "Recipe/CharacterRecipe.h"
 
-#include "CharacterModifier_ApplyInputConfig.generated.h"
+#include "CharacterRecipe_ApplyInputConfig.generated.h"
 
 class UPlayableComponent;
 class UInputConfig;
@@ -13,18 +13,18 @@ class UInputConfig;
 /**
  * Modifier class to apply InputConfig to Playable component
  */
-UCLASS(meta = (DisplayName = "CM Apply Input Config"))
-class UCharacterModifier_ApplyInputConfig final : public UCharacterModifier
+UCLASS()
+class UCharacterRecipe_ApplyInputConfig final : public UCharacterRecipe
 {
 	GENERATED_BODY()
 public:
-	UCharacterModifier_ApplyInputConfig();
+	UCharacterRecipe_ApplyInputConfig();
 
 protected:
 	UPROPERTY(EditDefaultsOnly, Category = "ApplyInputConfig")
 	TSoftObjectPtr<UInputConfig> InputConfig{ nullptr };
 
 protected:
-	virtual bool OnApply(APawn* Pawn) const override;
+	virtual void StartSetupNonInstanced_Implementation(FCharacterRecipePawnInfo Info) const override;
 
 };

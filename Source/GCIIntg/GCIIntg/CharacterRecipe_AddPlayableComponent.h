@@ -2,9 +2,9 @@
 
 #pragma once
 
-#include "CharacterModifier.h"
+#include "Recipe/CharacterRecipe.h"
 
-#include "CharacterModifier_AddPlayableComponent.generated.h"
+#include "CharacterRecipe_AddPlayableComponent.generated.h"
 
 class UPlayableComponent;
 class UInputConfig;
@@ -13,12 +13,12 @@ class UInputConfig;
 /**
  * Modifier class to add health component to Pawn
  */
-UCLASS(meta = (DisplayName = "CM Add Playable Component"))
-class UCharacterModifier_AddPlayableComponent final : public UCharacterModifier
+UCLASS()
+class UCharacterRecipe_AddPlayableComponent final : public UCharacterRecipe
 {
 	GENERATED_BODY()
 public:
-	UCharacterModifier_AddPlayableComponent();
+	UCharacterRecipe_AddPlayableComponent();
 
 protected:
 	UPROPERTY(EditDefaultsOnly, Category = "AddPlayableComponent")
@@ -28,6 +28,6 @@ protected:
 	TSoftObjectPtr<UInputConfig> InputConfig{ nullptr };
 
 protected:
-	virtual bool OnApply(APawn* Pawn) const override;
+	virtual void StartSetupNonInstanced_Implementation(FCharacterRecipePawnInfo Info) const override;
 
 };
