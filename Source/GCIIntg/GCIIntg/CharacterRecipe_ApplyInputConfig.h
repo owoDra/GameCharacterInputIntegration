@@ -25,6 +25,11 @@ protected:
 	TSoftObjectPtr<UInputConfig> InputConfig{ nullptr };
 
 protected:
-	virtual void StartSetupNonInstanced_Implementation(FCharacterRecipePawnInfo Info) const override;
+	virtual void StartSetup_Implementation(const FCharacterRecipePawnInfo& Info) override;
+
+	void ApplyInputConfig(APawn* Pawn);
+
+	UFUNCTION()
+	void HandleControllerChange(APawn* Pawn, AController* OldController, AController* NewController);
 
 };
